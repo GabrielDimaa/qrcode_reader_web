@@ -1,0 +1,1 @@
+library qrcode_reader_web;
