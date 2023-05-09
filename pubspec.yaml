@@ -1,7 +1,7 @@
 name: qrcode_reader_web
-description: A new Flutter package project.
-version: 0.0.1
-homepage:
+description: Package criado para leitura de QRCodes na plataforma Web.
+version: 1.0.0
+homepage: https://github.com/GabrielDimaa/qrcode_reader_web
 
 environment:
   sdk: '>=2.19.3 <3.0.0'
