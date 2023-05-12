@@ -10,27 +10,24 @@ import 'qrcode_reader_controller.dart';
 import 'widgets/clipper_camera.dart';
 import 'widgets/target_camera.dart';
 
-/// The function signature for the error builder.
-typedef MobileScannerErrorBuilder = Widget Function(
-  BuildContext,
-  QRCodeReaderException,
-  Widget?,
-);
+typedef ErrorBuilder = Widget Function({required BuildContext context, required QRCodeReaderException exception});
 
 class QRCodeReaderWidget extends StatefulWidget {
   final void Function(QRCodeCapture barcodes) onDetect;
   final double size;
+  final BorderRadius? borderRadius;
   final Color? targetColor;
-  final MobileScannerErrorBuilder? errorBuilder;
-  final Widget Function(BuildContext, Widget?)? placeholderBuilder;
+  final ErrorBuilder? errorBuilder;
+  final Widget? placeholder;
 
   const QRCodeReaderWidget({
     super.key,
     required this.onDetect,
     required this.size,
+    this.borderRadius,
     this.targetColor,
     this.errorBuilder,
-    this.placeholderBuilder,
+    this.placeholder,
   });
 
   @override
@@ -62,22 +59,14 @@ class _QRCodeReaderWidgetState extends State<QRCodeReaderWidget> {
     }
   }
 
-  Widget _buildPlaceholderOrError(BuildContext context, Widget? child) {
-    final QRCodeReaderException? error = exception;
-
-    if (error != null) {
-      return widget.errorBuilder?.call(context, error, child) ?? const ColoredBox(color: Colors.black, child: Center(child: Icon(Icons.error, color: Colors.white)));
-    }
-
-    return widget.placeholderBuilder?.call(context, child) ?? const ColoredBox(color: Colors.black);
-  }
-
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<StartArguments?>(
       valueListenable: controller.startArguments,
       builder: (context, value, child) {
         double sizeRenderer = widget.size;
+
+        if (exception != null) return errorWidget(context: context, exception: exception!);
 
         if (value != null) {
           final double minSizeImage = min(value.size.width, value.size.height);
@@ -86,36 +75,24 @@ class _QRCodeReaderWidgetState extends State<QRCodeReaderWidget> {
           }
         }
 
-        // if (value == null) return Container();
-
-        // return ClipRect(
-        //   child: SizedBox(
-        //     height: 300,
-        //     width: 300,
-        //     child: FittedBox(
-        //       fit: BoxFit.none,
-        //       child: value != null ? SizedBox(
-        //         width: value.size.width,
-        //         height: value.size.height,
-        //         child: HtmlElementView(viewType: value.webId),
-        //       ) : Container(color: Colors.grey.shade300),
-        //     ),
-        //   ),
-        // );
-
         return Stack(
           children: [
             Visibility(
               visible: value != null,
               replacement: Center(
-                child: Container(
-                  color: Colors.grey.shade400,
-                  width: sizeRenderer,
-                  height: sizeRenderer,
-                ),
+                child: widget.placeholder ??
+                    Container(
+                      width: sizeRenderer,
+                      height: sizeRenderer,
+                      decoration: BoxDecoration(
+                        borderRadius: widget.borderRadius,
+                        color: Colors.grey.shade400,
+                      ),
+                    ),
               ),
               child: Center(
-                child: ClipRect(
+                child: ClipRRect(
+                  borderRadius: widget.borderRadius,
                   child: SizedBox(
                     height: sizeRenderer,
                     width: sizeRenderer,
@@ -151,55 +128,19 @@ class _QRCodeReaderWidgetState extends State<QRCodeReaderWidget> {
         );
       },
     );
+  }
 
-    // return ValueListenableBuilder<StartArguments?>(
-    //   valueListenable: controller.startArguments,
-    //   builder: (context, value, child) {
-    //     double sizeRenderer = widget.size;
-    //
-    //     if (value != null) {
-    //       final double minSizeImage = min(value.size.width, value.size.height);
-    //       if (widget.size > minSizeImage) {
-    //         sizeRenderer = minSizeImage;
-    //       }
-    //     }
-    //
-    //     return Stack(
-    //       children: [
-    //         Center(
-    //           child: value != null
-    //               ? FittedBox(
-    //                   fit: BoxFit.cover,
-    //                   child: Center(
-    //                     child: SizedBox(
-    //                       height: value.size.height,
-    //                       width: value.size.width,
-    //                       child: HtmlElementView(viewType: value.webId),
-    //                     ),
-    //                   ),
-    //                 )
-    //               : Container(color: Colors.grey.shade300),
-    //         ),
-    //         Center(
-    //           child: Container(
-    //             width: sizeRenderer,
-    //             height: sizeRenderer,
-    //             padding: const EdgeInsets.all(16),
-    //             child: TargetCamera(color: widget.targetColor),
-    //           ),
-    //         ),
-    //         Center(
-    //           child: ClipPath(
-    //             //This [ValueKey] is necessary, in case the [sizeRenderer] changes, build the widget again.
-    //             key: ValueKey(sizeRenderer),
-    //             clipper: ClipperCamera(sizeRect: sizeRenderer),
-    //             child: Container(color: Colors.white),
-    //           ),
-    //         ),
-    //       ],
-    //     );
-    //   },
-    // );
+  Widget errorWidget({required BuildContext context, required QRCodeReaderException exception}) {
+    if (widget.errorBuilder == null) {
+      return Center(
+        child: Text(exception.toString()),
+      );
+    }
+
+    return widget.errorBuilder!.call(
+      context: context,
+      exception: exception,
+    );
   }
 
   @override

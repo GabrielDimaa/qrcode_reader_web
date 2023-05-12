@@ -73,6 +73,8 @@ class JsQRLibrary implements QRCodeReader {
         video.srcObject = stream;
         await video.play();
       }
+    } on QRCodeReaderPermissionDeniedException catch (_) {
+      rethrow;
     } catch (e) {
       throw PlatformException(code: 'QRCodeReaderError', message: e.toString());
     }
@@ -115,7 +117,7 @@ class JsQRLibrary implements QRCodeReader {
 
       return await html.window.navigator.mediaDevices?.getUserMedia(constraints);
     } on html.DomException catch (e) {
-      throw QRCodeReaderPermissionDeniedException(e.message);
+      throw QRCodeReaderPermissionDeniedException(message: e.message);
     }
   }
 }

@@ -43,30 +43,30 @@ class QRCodeReaderController {
         return;
       }
 
-      registerVideo();
+      _registerVideo();
 
       await qrCodeReader.start();
       subscription = qrCodeReader.detectQrCode().listen((event) {
-        // if (event != null && !streamController.isClosed) streamController.add(event);
-        if (event != null) streamController.add(event);
+        if (event != null && !streamController.isClosed) streamController.add(event);
       });
 
       startArguments.value = StartArguments(
         webId: viewID,
         size: Size(qrCodeReader.videoWidth.toDouble(), qrCodeReader.videoHeight.toDouble()),
       );
-    } on PlatformException catch (e) {
+    } on QRCodeReaderException catch (_) {
+      rethrow;
+    } catch (e) {
       throw QRCodeReaderException(
-        code: e.code,
-        message: e.message,
-        details: e.details,
+        code: "QRCodeReaderException",
+        message: e.toString(),
       );
     } finally {
       starting = false;
     }
   }
 
-  void registerVideo() {
+  void _registerVideo() {
     ui.platformViewRegistry.registerViewFactory(
         viewID,
         (_) => vidDiv
@@ -74,9 +74,18 @@ class QRCodeReaderController {
           ..style.height = '100%');
   }
 
-  void dispose() {
+  Future<void> dispose() async {
     subscription?.cancel();
     streamController.close();
-    qrCodeReader.stop();
+
+    bool repeat = starting;
+    do {
+      repeat = starting;
+      if (!repeat) {
+        await qrCodeReader.stop();
+      } else {
+        await Future.delayed(const Duration(milliseconds: 500));
+      }
+    } while (repeat);
   }
 }
