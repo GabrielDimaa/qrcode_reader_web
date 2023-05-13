@@ -7,7 +7,7 @@ For a more detailed example, please check the `example` directory.
 
 ```.yaml
 dependencies:  
-  qrcode_reader_web: ^1.0.0
+  qrcode_reader_web: <latest_version>
 ```
 
 ```.dart
