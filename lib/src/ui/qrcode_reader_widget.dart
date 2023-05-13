@@ -12,6 +12,7 @@ import 'widgets/target_camera.dart';
 
 typedef ErrorBuilder = Widget Function({required BuildContext context, required QRCodeReaderException exception});
 
+/// Widget responsible for displaying the camera videos and reading the QR Code.
 class QRCodeReaderWidget extends StatefulWidget {
   final void Function(QRCodeCapture barcodes) onDetect;
   final double size;
@@ -92,7 +93,7 @@ class _QRCodeReaderWidgetState extends State<QRCodeReaderWidget> {
               ),
               child: Center(
                 child: ClipRRect(
-                  borderRadius: widget.borderRadius,
+                  borderRadius: widget.borderRadius ?? BorderRadius.circular(0),
                   child: SizedBox(
                     height: sizeRenderer,
                     width: sizeRenderer,

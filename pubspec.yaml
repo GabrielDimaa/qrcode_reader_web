@@ -1,5 +1,5 @@
 name: qrcode_reader_web
-description: Package criado para leitura de QRCodes na plataforma Web.
+description: Esta biblioteca tem como objetivo ler QR Codes na Web. Com ele, é possível utilizar a câmera do dispositivo para escanear QR codes e realizar diversas ações com os dados obtidos.
 version: 1.0.0
 homepage: https://github.com/GabrielDimaa/qrcode_reader_web
 
@@ -10,6 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
   js: ^0.6.3
 
 dev_dependencies:
@@ -18,3 +20,8 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter:
+  plugin:
+    platforms:
+      web:
+        pluginClass: QRCodeReader
+        fileName: src/qrcode_reader.dart
