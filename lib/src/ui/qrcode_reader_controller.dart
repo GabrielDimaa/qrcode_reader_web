@@ -2,8 +2,7 @@ import 'dart:async';
 import 'dart:html';
 import 'dart:ui' as ui;
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 
 import '../exceptions/qrcode_reader_exception.dart';
 import '../libraries/jsqr_library.dart';
@@ -37,7 +36,7 @@ class QRCodeReaderController {
       if (qrCodeReader.isStarted) {
         startArguments.value = StartArguments(
           webId: viewID,
-          size: Size(qrCodeReader.videoWidth.toDouble(), qrCodeReader.videoHeight.toDouble()),
+          size: ui.Size(qrCodeReader.videoWidth.toDouble(), qrCodeReader.videoHeight.toDouble()),
         );
 
         return;
@@ -52,7 +51,7 @@ class QRCodeReaderController {
 
       startArguments.value = StartArguments(
         webId: viewID,
-        size: Size(qrCodeReader.videoWidth.toDouble(), qrCodeReader.videoHeight.toDouble()),
+        size: ui.Size(qrCodeReader.videoWidth.toDouble(), qrCodeReader.videoHeight.toDouble()),
       );
     } on QRCodeReaderException catch (_) {
       rethrow;
