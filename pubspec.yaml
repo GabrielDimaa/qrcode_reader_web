@@ -1,5 +1,5 @@
 name: qrcode_reader_web
-description: Esta biblioteca tem como objetivo ler QR Codes na Web. Com ele, é possível utilizar a câmera do dispositivo para escanear QR codes e realizar diversas ações com os dados obtidos.
+description: This library aims to read QR Codes on the web. With it, you can use the device's camera to scan QR codes and perform various actions with the obtained data.
 version: 1.0.1
 homepage: https://github.com/GabrielDimaa/qrcode_reader_web
 
