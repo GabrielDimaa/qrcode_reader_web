@@ -65,7 +65,7 @@ Para um exemplo mais detalhado, confira no diretório `example`.
 
 ```.yaml
 dependencies:  
-  qrcode_reader_web: ^1.0.0
+  qrcode_reader_web: <latest_version>
 ```
 
 ```.dart
