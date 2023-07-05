@@ -14,12 +14,12 @@ class GenericQRCodeReaderWidget extends StatelessWidget {
   final Color qrCodeOutsideColor;
   final double qrCodeOutsideOpacity;
 
-  /// Widget reponsável por mostrar a câmera e ler o QR Code.
-  /// [onDetect] - Função chamada quando o QR Code é detectado.
-  /// [errorBuilder] - Widget que será mostrado quando ocorrer um erro.
-  /// [qrCodeSize] - Tamanho do QR Code.
-  /// [qrCodeOutsideColor] - Cor de fora do QR Code.
-  /// [qrCodeOutsideOpacity] - Opacidade de fora do QR Code.
+  /// Widget responsible for displaying the camera and reading the QR Code.
+  /// [onDetect] - Function called when the QR Code is detected.
+  /// [errorBuilder] - Widget to be displayed when an error occurs.
+  /// [qrCodeSize] - Size of the QR Code.
+  /// [qrCodeOutsideColor] - Color outside the QR Code.
+  /// [qrCodeOutsideOpacity] - Opacity outside the QR Code.
   const GenericQRCodeReaderWidget({
     super.key,
     required this.onDetect,
