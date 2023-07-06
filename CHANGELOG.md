@@ -1,4 +1,4 @@
-## 1.0.3
+## 1.1.0
 
 * Added a new widget that displays the camera's transparent background with a focus on the targeting for QR Code scanning.
 
