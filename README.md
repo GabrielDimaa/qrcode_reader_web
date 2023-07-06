@@ -10,6 +10,11 @@ dependencies:
   qrcode_reader_web: <latest_version>
 ```
 
+```.html
+// Add it to your project's index.html inside the "web" folder.
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+```
+
 ```.dart
 import 'package:qrcode_reader_web/qrcode_reader_web.dart';
 ```
@@ -27,9 +32,13 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SafeArea(
         child: Column(
           children: [
-            QRCodeReaderWidget(
+            QRCodeReaderSquareWidget(
               onDetect: (QRCodeCapture capture) => setState(() => list.add(capture)),
-              size: 350,
+              size: 250,
+            ),
+            QRCodeReaderTransparentWidget(
+              onDetect: (QRCodeCapture capture) => setState(() => list.add(capture)),
+              targetSize: 250,
             ),
             Expanded(
               child: ListView.builder(
@@ -68,6 +77,11 @@ dependencies:
   qrcode_reader_web: <latest_version>
 ```
 
+````.html
+// Adicione no index.html do seu projeto dentro da pasta "web".
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+````
+
 ```.dart
 import 'package:qrcode_reader_web/qrcode_reader_web.dart';
 ```
@@ -85,9 +99,13 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SafeArea(
         child: Column(
           children: [
-            QRCodeReaderWidget(
+            QRCodeReaderSquareWidget(
               onDetect: (QRCodeCapture capture) => setState(() => list.add(capture)),
-              size: 350,
+              size: 250,
+            ),
+            QRCodeReaderTransparentWidget(
+              onDetect: (QRCodeCapture capture) => setState(() => list.add(capture)),
+              targetSize: 250,
             ),
             Expanded(
               child: ListView.builder(

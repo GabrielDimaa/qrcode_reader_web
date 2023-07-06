@@ -10,7 +10,6 @@ import 'package:js/js.dart';
 import '../objects/qrcode_capture.dart';
 import '../qrcode_reader.dart';
 import '../exceptions/qrcode_reader_exception.dart';
-import 'js_library.dart';
 import 'media_devices_library.dart';
 
 @JS('jsQR')
@@ -59,7 +58,8 @@ class JsQRLibrary implements QRCodeReader {
   @override
   Future<void> start() async {
     try {
-      await JsLibrary.injectLibraries([const JsLibrary(contextName: 'jsQR', url: 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js')]);
+      // Insert directly into index.html.
+      // await JsLibrary.injectLibraries([const JsLibrary(contextName: 'jsQR', url: 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js')]);
 
       videoContainer.children = [video];
 

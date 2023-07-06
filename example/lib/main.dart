@@ -39,13 +39,13 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SafeArea(
         child: Column(
           children: [
-            // QRCodeReaderSquareWidget(
-            //   onDetect: (QRCodeCapture capture) => setState(() => list.add(capture)),
-            //   size: 350,
-            // ),
+            QRCodeReaderSquareWidget(
+              onDetect: (QRCodeCapture capture) => setState(() => list.add(capture)),
+              size: 250,
+            ),
             QRCodeReaderTransparentWidget(
               onDetect: (QRCodeCapture capture) => setState(() => list.add(capture)),
-              targetSize: 350,
+              targetSize: 250,
             ),
             Expanded(
               child: ListView.builder(
