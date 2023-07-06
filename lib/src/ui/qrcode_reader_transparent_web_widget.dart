@@ -5,46 +5,43 @@ import 'package:flutter/material.dart';
 import '../../qrcode_reader_web.dart';
 import '../objects/start_arguments.dart';
 import '../typedef/typedef.dart';
+import 'components/square_clipper.dart';
 import 'qrcode_reader_controller.dart';
 
 /// Method responsible for building the widget to be used in a conditional import.
 Widget buildWidget({
   required void Function(QRCodeCapture barcodes) onDetect,
   ErrorBuilder? errorBuilder,
-  double qrCodeSize = 250,
-  Color qrCodeOutsideColor = Colors.transparent,
-  double qrCodeOutsideOpacity = 0,
+  double targetSize = 250,
+  Color? outsideColor,
 }) =>
-    GenericWebWidget(
+    QRCodeReaderTransparentWebWidget(
       onDetect: onDetect,
       errorBuilder: errorBuilder,
-      qrCodeSize: qrCodeSize,
-      qrCodeOutsideColor: qrCodeOutsideColor,
-      qrCodeOutsideOpacity: qrCodeOutsideOpacity,
+      targetSize: targetSize,
+      outsideColor: outsideColor,
     );
 
 /// Widget responsible for displaying the camera videos and reading the QR Code.
-class GenericWebWidget extends StatefulWidget {
+class QRCodeReaderTransparentWebWidget extends StatefulWidget {
   final void Function(QRCodeCapture barcodes) onDetect;
   final ErrorBuilder? errorBuilder;
-  final double qrCodeSize;
-  final Color qrCodeOutsideColor;
-  final double qrCodeOutsideOpacity;
+  final double targetSize;
+  final Color? outsideColor;
 
-  const GenericWebWidget({
+  const QRCodeReaderTransparentWebWidget({
     super.key,
     required this.onDetect,
     this.errorBuilder,
-    this.qrCodeSize = 250,
-    this.qrCodeOutsideColor = Colors.transparent,
-    this.qrCodeOutsideOpacity = 0,
+    this.targetSize = 250,
+    this.outsideColor,
   });
 
   @override
-  State<GenericWebWidget> createState() => _GenericWebWidgetState();
+  State<QRCodeReaderTransparentWebWidget> createState() => _QRCodeReaderTransparentWebWidgetState();
 }
 
-class _GenericWebWidgetState extends State<GenericWebWidget> {
+class _QRCodeReaderTransparentWebWidgetState extends State<QRCodeReaderTransparentWebWidget> {
   final QRCodeReaderController controller = QRCodeReaderController();
 
   late StreamSubscription<QRCodeCapture>? qrCodeSubscription;
@@ -74,12 +71,6 @@ class _GenericWebWidgetState extends State<GenericWebWidget> {
     return ValueListenableBuilder<StartArguments?>(
       valueListenable: controller.startArguments,
       builder: (context, value, child) {
-        final totalWidth = MediaQuery.of(context).size.width;
-        final totalHeight = MediaQuery.of(context).size.height;
-        final borderWidth = (totalWidth / 2) - (widget.qrCodeSize / 2);
-        final borderHeight = (totalHeight / 2) - (widget.qrCodeSize / 2);
-        final colorAndOpacity = widget.qrCodeOutsideColor.withOpacity(widget.qrCodeOutsideOpacity);
-
         if (exception != null) {
           return errorWidget(context: context, exception: exception!);
         }
@@ -97,19 +88,22 @@ class _GenericWebWidgetState extends State<GenericWebWidget> {
               ),
               child: Center(
                 child: SizedBox(
-                  width: totalWidth,
-                  height: totalHeight,
+                  width: value?.size.width ?? 0,
+                  height: value?.size.height ?? 0,
                   child: Stack(
                     children: [
-                      HtmlElementView(viewType: value?.webId ?? ""),
+                      Container(
+                        color: Colors.black,
+                        child: HtmlElementView(viewType: value?.webId ?? ""),
+                      ),
                       Center(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              top: BorderSide(color: colorAndOpacity, width: borderHeight),
-                              left: BorderSide(color: colorAndOpacity, width: borderWidth),
-                              right: BorderSide(color: colorAndOpacity, width: borderWidth),
-                              bottom: BorderSide(color: colorAndOpacity, width: borderHeight),
+                        child: IgnorePointer(
+                          child: ClipPath(
+                            clipper: SquareClipper(widget.targetSize),
+                            child: Container(
+                              width: double.infinity,
+                              height: double.infinity,
+                              color: widget.outsideColor ?? Colors.black.withOpacity(0.5),
                             ),
                           ),
                         ),

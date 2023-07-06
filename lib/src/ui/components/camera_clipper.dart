@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class ClipperCamera extends CustomClipper<Path> {
+class CameraClipper extends CustomClipper<Path> {
   final double sizeRect;
 
-  ClipperCamera({required this.sizeRect});
+  CameraClipper({required this.sizeRect});
 
   @override
   Path getClip(Size size) {

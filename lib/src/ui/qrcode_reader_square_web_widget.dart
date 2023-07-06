@@ -7,8 +7,8 @@ import '../../qrcode_reader_web.dart';
 import '../objects/start_arguments.dart';
 import '../typedef/typedef.dart';
 import 'qrcode_reader_controller.dart';
-import 'widgets/clipper_camera.dart';
-import 'widgets/target_camera.dart';
+import 'components/camera_clipper.dart';
+import 'components/target_camera.dart';
 
 /// Method responsible for building the widget to be used in a conditional import.
 Widget buildWidget({
@@ -19,7 +19,7 @@ Widget buildWidget({
   ErrorBuilder? errorBuilder,
   Widget? placeholder,
 }) =>
-    WebWidget(
+    QRCodeReaderWebWidget(
       onDetect: onDetect,
       size: size,
       borderRadius: borderRadius,
@@ -29,7 +29,7 @@ Widget buildWidget({
     );
 
 /// Widget responsible for displaying the camera videos and reading the QR Code.
-class WebWidget extends StatefulWidget {
+class QRCodeReaderWebWidget extends StatefulWidget {
   final void Function(QRCodeCapture barcodes) onDetect;
   final double size;
   final BorderRadius? borderRadius;
@@ -37,7 +37,7 @@ class WebWidget extends StatefulWidget {
   final ErrorBuilder? errorBuilder;
   final Widget? placeholder;
 
-  const WebWidget({
+  const QRCodeReaderWebWidget({
     super.key,
     required this.onDetect,
     required this.size,
@@ -48,10 +48,10 @@ class WebWidget extends StatefulWidget {
   });
 
   @override
-  State<WebWidget> createState() => _WebWidgetState();
+  State<QRCodeReaderWebWidget> createState() => _QRCodeReaderWebWidgetState();
 }
 
-class _WebWidgetState extends State<WebWidget> {
+class _QRCodeReaderWebWidgetState extends State<QRCodeReaderWebWidget> {
   final QRCodeReaderController controller = QRCodeReaderController();
 
   late StreamSubscription<QRCodeCapture>? qrCodeSubscription;
@@ -137,7 +137,7 @@ class _WebWidgetState extends State<WebWidget> {
               child: ClipPath(
                 //This [ValueKey] is necessary, in case the [sizeRenderer] changes, build the widget again.
                 key: ValueKey(sizeRenderer),
-                clipper: ClipperCamera(sizeRect: sizeRenderer),
+                clipper: CameraClipper(sizeRect: sizeRenderer),
                 child: Container(color: Colors.white),
               ),
             ),

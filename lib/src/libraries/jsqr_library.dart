@@ -99,9 +99,7 @@ class JsQRLibrary implements QRCodeReader {
     final ctx = canvas.context2D;
     ctx.drawImage(video, 0, 0);
     final imgData = ctx.getImageData(0, 0, canvas.width!, canvas.height!);
-    final code = jsQR(imgData.data, canvas.width, canvas.height);
-
-    return code;
+    return jsQR(imgData.data, canvas.width, canvas.height);
   }
 
   Future<html.MediaStream?> _initMediaStream() async {

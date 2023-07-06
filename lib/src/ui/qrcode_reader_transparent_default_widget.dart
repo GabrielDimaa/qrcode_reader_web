@@ -8,8 +8,7 @@ import '../typedef/typedef.dart';
 Widget buildWidget({
   required void Function(QRCodeCapture barcodes) onDetect,
   ErrorBuilder? errorBuilder,
-  double qrCodeSize = 250,
-  Color qrCodeOutsideColor = Colors.transparent,
-  double qrCodeOutsideOpacity = 0,
+  double targetSize = 250,
+  Color? outsideColor,
 }) =>
     const SizedBox.shrink();
