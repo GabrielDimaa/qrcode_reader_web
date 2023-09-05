@@ -1,3 +1,8 @@
+## 1.1.1
+
+* Correction when building with CanvasKit.
+  Previously, the script was injected automatically, but it didn't work when rendering with CanvasKit. To use it, you will need to manually inject it into the 'index.html'.
+
 ## 1.1.0
 
 * Added a new widget that displays the camera's transparent background with a focus on the targeting for QR Code scanning.
