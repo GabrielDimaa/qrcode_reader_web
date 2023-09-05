@@ -59,7 +59,8 @@ class JsQRLibrary implements QRCodeReader {
   @override
   Future<void> start() async {
     try {
-      await JsLibrary.injectLibraries([const JsLibrary(contextName: 'jsQR', url: 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js')]);
+      //Voltou pro index.html novamente
+      //await JsLibrary.injectLibraries([const JsLibrary(contextName: 'jsQR', url: 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js')]);
 
       videoContainer.children = [video];
 

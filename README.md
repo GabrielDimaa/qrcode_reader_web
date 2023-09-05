@@ -10,6 +10,11 @@ dependencies:
   qrcode_reader_web: <latest_version>
 ```
 
+```.html
+// Add it to your project's index.html inside the "web" folder.
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+```
+
 ```.dart
 import 'package:qrcode_reader_web/qrcode_reader_web.dart';
 ```
@@ -71,6 +76,11 @@ Para um exemplo mais detalhado, confira no diretório `example`.
 dependencies:  
   qrcode_reader_web: <latest_version>
 ```
+
+````.html
+// Adicione no index.html do seu projeto dentro da pasta "web".
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+````
 
 ```.dart
 import 'package:qrcode_reader_web/qrcode_reader_web.dart';
