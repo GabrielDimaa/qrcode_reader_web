@@ -6,7 +6,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
 import 'package:js/js.dart';
-import 'package:qrcode_reader_web/src/libraries/js_library.dart';
 
 import '../objects/qrcode_capture.dart';
 import '../qrcode_reader.dart';
