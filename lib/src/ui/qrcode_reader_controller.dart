@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:html';
-import 'dart:ui' as ui;
+import 'dart:ui';
+import 'dart:ui_web' as ui;
 
 import 'package:flutter/foundation.dart';
 
@@ -52,7 +53,7 @@ class QRCodeReaderController {
       if (qrCodeReader.isStarted) {
         startArguments.value = StartArguments(
           webId: _viewID,
-          size: ui.Size(qrCodeReader.videoWidth.toDouble(), qrCodeReader.videoHeight.toDouble()),
+          size: Size(qrCodeReader.videoWidth.toDouble(), qrCodeReader.videoHeight.toDouble()),
         );
 
         return;
@@ -67,7 +68,7 @@ class QRCodeReaderController {
 
       startArguments.value = StartArguments(
         webId: _viewID,
-        size: ui.Size(qrCodeReader.videoWidth.toDouble(), qrCodeReader.videoHeight.toDouble()),
+        size: Size(qrCodeReader.videoWidth.toDouble(), qrCodeReader.videoHeight.toDouble()),
       );
     } on QRCodeReaderException catch (_) {
       rethrow;
