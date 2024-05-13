@@ -1,3 +1,6 @@
+## 1.1.2
+* Flutter and js package updates.
+
 ## 1.1.1
 
 * Correction when building with CanvasKit.
